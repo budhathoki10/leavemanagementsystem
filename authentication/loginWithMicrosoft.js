@@ -13,6 +13,7 @@ const loginWithMicrosoft = async (req, res) => {
       userData = new user({ studentname, email });
       await userData.save();
     }
+    
 
     const token = jwt.sign(
       { id: userData._id, email: userData.email },
