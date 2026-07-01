@@ -1,5 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const passport = require('passport');
+require('dotenv').config();
+const configureGooglePassport = require('./authentication/passportGoogle');
 const teacherRouter = require('./router/teacher.route');
 const studentRouter = require('./router/student.route');
 let app = express();
@@ -11,14 +14,11 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
 app.use(cookieParser());
+configureGooglePassport();
+app.use(passport.initialize());
 const allowedOrigins = [
-  'http://localhost:5173',
-  'http://localhost:4173',
-  'http://localhost:7500',
-  'http://localhost:7501',
   'https://leavemanagementfrontend.vercel.app',
   'https://devplat.heraldcollege.edu.np', // This is correct
-  'http://192.168.0.100:7500',
 ];
 
 app.use(
@@ -35,7 +35,6 @@ app.use(
   }),
 );
 
-require('dotenv').config();
 mongoose
   .connect(process.env.MONGO_URL)
   .then(() => {

@@ -11,13 +11,17 @@ const {
 const { register, login, logout } = require('../authentication/loginsignup.authentication');
 const { validateregister, validatelogin } = require('../validations/validations.validations');
 const handleValidationErrors = require('../validations/handle.validations');
-const loginWithMicrosoft = require('../authentication/loginWithMicrosoft');
+const {
+  startGoogleAuth,
+  googleAuthCallback,
+} = require('../authentication/googlePassport.authentication');
 const Profile = require('../viewOwnprofile/profile');
 
 studentRouter.post('/user/register', validateregister, handleValidationErrors, register);
 studentRouter.post('/user/login', validatelogin, handleValidationErrors, login);
 studentRouter.post('/user/logout', logout);
-studentRouter.post('/loginwithmicrosoft', loginWithMicrosoft);
+studentRouter.get('/auth/google', startGoogleAuth);
+studentRouter.get('/auth/google/callback', googleAuthCallback);
 studentRouter.get('/user/dashboard', auth, getLeaveStats);
 studentRouter.get('/task/viewownleave', auth, viewownleave);
 studentRouter.get('/task/filterviewownleave', auth, filterviewownleave);

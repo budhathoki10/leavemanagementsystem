@@ -208,8 +208,6 @@ const login = async (req, res) => {
     }
     // login
     let token = loggedin(checkemail);
-    // const isLocalhost = req.headers.origin && req.headers.origin.includes('localhost');
-
     // let cookieObject = {
     //   httpOnly: true,
     //   // secure: !isLocalhost,

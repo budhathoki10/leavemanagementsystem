@@ -7,7 +7,6 @@ module.exports = {
     httpOnly: true,
     secure: !isLocalhost,
     sameSite: isLocalhost ? 'Lax' : 'None',
-    // domain: !isLocalhost ? '.heraldcollege.edu.np' : "localhost",
     path: '/',
     maxAge: 3 * 30 * 24 * 60 * 60 * 1000,
   },
