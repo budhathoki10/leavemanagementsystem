@@ -16,22 +16,38 @@ app.use(express.json());
 app.use(cookieParser());
 configureGooglePassport();
 app.use(passport.initialize());
-const allowedOrigins = [
-  'https://leavemanagementfrontend.vercel.app',
-  'https://devplat.heraldcollege.edu.np', // This is correct
-];
+const getOrigin = (value) => {
+  try {
+    return new URL(value).origin;
+  } catch {
+    return value;
+  }
+};
+
+const allowedOrigins = new Set(
+  [
+    'https://leavemanagementfrontend.vercel.app',
+    'https://devplat.heraldcollege.edu.np',
+    'http://localhost:7500',
+    'http://127.0.0.1:7500',
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+    process.env.FRONTEND_URL && getOrigin(process.env.FRONTEND_URL),
+    ...(process.env.CORS_ORIGINS || '').split(',').map((origin) => origin.trim()),
+  ].filter(Boolean),
+);
 
 app.use(
   cors({
     origin: (origin, callback) => {
       if (!origin) return callback(null, true);
-      if (allowedOrigins.includes(origin)) {
+      if (allowedOrigins.has(origin)) {
         callback(null, true);
       } else {
         callback(new Error('Not allowed by CORS'));
       }
     },
-    credentials: true, // This is correct and essential
+    credentials: true,
   }),
 );
 
@@ -48,7 +64,12 @@ mongoose
     console.log('error to connect in mongodb');
   });
 
-app.use('/api', teacherRouter);
-app.use('/api', studentRouter);
-app.use('/api', router);
+const mountRoutes = (basePath) => {
+  app.use(basePath, teacherRouter);
+  app.use(basePath, studentRouter);
+  app.use(basePath, router);
+};
+
+mountRoutes('/api');
+mountRoutes('/');
 app.use(handleroute);
