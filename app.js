@@ -16,6 +16,7 @@ const allowedOrigins = [
   'http://localhost:4173',
   'http://localhost:7500',
   'http://localhost:7501',
+  'https://leavemanagementfrontend.vercel.app',
   'https://devplat.heraldcollege.edu.np', // This is correct
   'http://192.168.0.100:7500',
 ];
