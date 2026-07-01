@@ -11,18 +11,6 @@
 //   try {
 //     const { email, password, confirm_password } = req.body;
 
-//     if (!email.endsWith('@heraldcollege.edu.np')) {
-//       return res.status(400).json(
-//         new errorHandler(
-//           false,
-//           400,
-//           'Error processing request',
-//           'Please use your college email (@heraldcollege.edu.np)',
-//           null
-//         )
-//       );
-//     }
-
 //     const checkemail = await userschema.findOne({ email });
 //     console.log(checkemail)
 //     if (checkemail) {
@@ -154,20 +142,6 @@ const register = async (req, res) => {
   try {
     const { email, password, confirm_password } = req.body;
 
-    //  make a only one admin with email: registrytimetableexamination@heraldcollege.edu.np
-    if (!email.endsWith('@heraldcollege.edu.np')) {
-      return res
-        .status(400)
-        .json(
-          new errorHandler(
-            false,
-            404,
-            'Error processing request',
-            'Please use your college email (@heraldcollege.edu.np)',
-            null,
-          ),
-        );
-    }
     const checkemail = await userschema.findOne({ email: email });
     if (checkemail) {
       return res
