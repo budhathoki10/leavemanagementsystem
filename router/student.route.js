@@ -8,6 +8,7 @@ const {
   getLeaveStats,
   filterviewownleave,
 } = require('../controller/student.controller');
+const { readModules } = require('../controller/modules.controller');
 const { register, login, logout } = require('../authentication/loginsignup.authentication');
 const { validateregister, validatelogin } = require('../validations/validations.validations');
 const handleValidationErrors = require('../validations/handle.validations');
@@ -23,6 +24,7 @@ studentRouter.post('/user/logout', logout);
 studentRouter.get('/auth/google', startGoogleAuth);
 studentRouter.get('/auth/google/callback', googleAuthCallback);
 studentRouter.get('/user/dashboard', auth, getLeaveStats);
+studentRouter.get('/task/modules', auth, readModules);
 studentRouter.get('/task/viewownleave', auth, viewownleave);
 studentRouter.get('/task/filterviewownleave', auth, filterviewownleave);
 

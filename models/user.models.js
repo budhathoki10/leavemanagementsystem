@@ -3,7 +3,7 @@ const { requiredString, normalType } = require('./common.schema');
 let userdetail = mongoose.Schema({
   studentname: {
     ...normalType,
-    default: 'john doe',
+    default: 'Student',
   },
 
   email: requiredString,

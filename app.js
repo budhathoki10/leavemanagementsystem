@@ -3,6 +3,10 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 require('dotenv').config();
 const configureGooglePassport = require('./authentication/passportGoogle');
+const {
+  startGoogleAuth,
+  googleAuthCallback,
+} = require('./authentication/googlePassport.authentication');
 const teacherRouter = require('./router/teacher.route');
 const studentRouter = require('./router/student.route');
 let app = express();
@@ -63,6 +67,11 @@ mongoose
   .catch(() => {
     console.log('error to connect in mongodb');
   });
+
+app.get('/api/auth/google', startGoogleAuth);
+app.get('/api/auth/google/callback', googleAuthCallback);
+app.get('/auth/google', startGoogleAuth);
+app.get('/auth/google/callback', googleAuthCallback);
 
 const mountRoutes = (basePath) => {
   app.use(basePath, teacherRouter);

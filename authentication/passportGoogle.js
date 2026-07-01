@@ -22,7 +22,7 @@ const configureGooglePassport = () => {
 
           if (!userData) {
             userData = new user({
-              studentname: profile.displayName || 'john doe',
+              studentname: profile.displayName || 'Student',
               email,
             });
             await userData.save();
